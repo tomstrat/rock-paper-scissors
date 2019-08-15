@@ -2,44 +2,63 @@
 <html>
     <head>
         <script>
-            function computerPlay(){
-                let choice = Math.floor(Math.random() * Math.floor(3))
-                switch (choice){
-                    case 0:
-                        return "rock";
-                    case 1:
-                        return "paper";
-                    case 2:
-                        return "scissors";
+            function game(){
+
+                let playerScore = 0;
+                let computerScore = 0;
+            
+                function computerPlay(){
+                    let choice = Math.floor(Math.random() * Math.floor(3))
+                    switch (choice){
+                        case 0:
+                            return "rock";
+                        case 1:
+                            return "paper";
+                        case 2:
+                            return "scissors";
+                    }
+                }
+
+                function playRound(playerSelection, computerSelection){
+                    let playerChoice = playerSelection.toLowerCase();
+
+                    if (playerChoice == "rock" || playerChoice == "paper" || playerChoice == "scissors"){
+                        
+                        if(playerChoice == computerSelection){
+                            return `No Winners! Both picked ${playerChoice}`;
+                        } else if (playerChoice == "rock" && computerSelection == "scissors" ||
+                                playerChoice =="scissors" && computerSelection == "paper" ||
+                                playerChoice == "paper" && computerSelection == "rock"){
+                            playerScore += 1;
+                            return `You Win! ${playerChoice} beats ${computerSelection}`;
+                        } else {
+                            computerScore += 1;
+                            return `You Lose! ${computerSelection} beats ${playerChoice}`
+                        }
+
+                    } else {
+                        return "Thats not an option";
+                    }  
+
+                }
+
+                for (let i=0; i < 5; i++){
+
+                    let playerSelection = prompt("Rock, Paper or Scissors?");
+                    let computerSelection = computerPlay();
+
+                    console.log(playRound(playerSelection, computerSelection));
+                }
+
+                if(playerScore == computerScore){
+                    console.log(`Final Score: Draw! Both got ${playerScore}`);
+                } else if (playerScore > computerScore){
+                    console.log(`Final Score: You Win! You got ${playerScore}`);
+                } else {
+                    console.log(`Final Score: You Lose! You got ${playerScore}`);
                 }
             }
-
-            function playRound(playerSelection, computerSelection){
-                let playerChoice = playerSelection.toLowerCase();
-
-                if (playerChoice == "rock" || playerChoice == "paper" || playerChoice == "scissors"){
-                    
-                    if(playerChoice == computerSelection){
-                        return `No Winners! Both picked ${playerChoice}`;
-                    } else if (playerChoice == "rock" && computerSelection == "scissors" ||
-                            playerChoice =="scissors" && computerSelection == "paper" ||
-                            playerChoice == "paper" && computerSelection == "rock"){
-                        return `You Win! ${playerChoice} beats ${computerSelection}`;
-                    } else {
-                        return `You Lose! ${computerSelection} beats ${playerChoice}`
-                    }
-
-                } else {
-                    return "Thats not an option";
-                }  
-
-            }
-
-            let playerSelection = prompt("Rock, Paper or Scissors?");
-            let computerSelection = computerPlay();
-
-            console.log(playRound(playerSelection, computerSelection));
-
+            game();
         </script>
     </head>
     <body>
